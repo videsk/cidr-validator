@@ -1,40 +1,49 @@
-var ipaddr = require("ipaddr.js");
+const ipaddr = require("ipaddr.js");
 
-module.exports = check_many_cidrs;
+/**
+ * Verify CIDR IP list
+ * @param ipAddress {String} IP address
+ * @param ipList {String|[String]} IPs to compare
+ * @returns {*|boolean|boolean}
+ */
+function verifyCIDRList(ipAddress = '', ipList = '') {
 
-function check_many_cidrs(addr, range) {
-    if (typeof (range) === "string") {
-        return check_single_cidr(addr, range)
-    }
-    else if (typeof (range) === "object") //list
-    {
-        var ip_is_in_range = false;
-        for (var i = 0; i < range.length; i++) {
-            if (check_single_cidr(addr, range[i])) {
-                ip_is_in_range = true;
-                break
-            }
+    if (!Array.isArray(ipList)) return verifyCIDR(ipAddress, ipList);
+
+    let isValid = false;
+    for (let i = 0; i < ipList.length; i++) {
+        if (verifyCIDR(ipAddress, ipList[i])) {
+            isValid = true;
+            break;
         }
-        return ip_is_in_range;
     }
+    return isValid;
 }
 
-function check_single_cidr(addr, cidr) {
+/**
+ * Compare individual IP
+ * @param ipAddress {String} IP address
+ * @param cidr {String} IP to compare
+ * @returns {boolean}
+ */
+function verifyCIDR(ipAddress = '', cidr = '') {
+
     try {
-        var parsed_addr = ipaddr.process(addr);
-        if (cidr.indexOf('/') === -1) {
-            var parsed_cidr_as_ip = ipaddr.process(cidr);
-            if ((parsed_addr.kind() === "ipv6") && (parsed_cidr_as_ip.kind() === "ipv6")){
-                return (parsed_addr.toNormalizedString() === parsed_cidr_as_ip.toNormalizedString())
-            }
-            return (parsed_addr.toString() == parsed_cidr_as_ip.toString())
+        const parsedIpAddress = ipaddr.parse(ipAddress);
+
+        if (cidr.includes('/')) {
+            const ip = ipaddr.parseCIDR(cidr);
+            return parsedIpAddress.match(ip);
         }
-        else {
-            var parsed_range = ipaddr.parseCIDR(cidr);
-            return parsed_addr.match(parsed_range)
-        }
+
+        const cidrAsIp = ipaddr.parse(cidr);
+        if ((parsedIpAddress.kind() === 'ipv6') && (cidrAsIp.kind() === 'ipv6')) return parsedIpAddress.toNormalizedString() === cidrAsIp.toNormalizedString();
+        return parsedIpAddress.toString() === cidrAsIp.toString();
     }
-    catch (e) {
-        return false
+    catch (error) {
+        if (process.env.NODE_ENV !== 'production') console.error(error);
+        return false;
     }
 }
+
+module.exports = verifyCIDRList;

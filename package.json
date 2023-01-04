@@ -30,9 +30,9 @@
   },
   "homepage": "https://github.com/danielcompton/ip-range-check#readme",
   "dependencies": {
-    "ipaddr.js": "^1.0.1"
+    "ipaddr.js": "^2.0.1"
   },
   "devDependencies": {
-    "mocha": "^2.2.5"
+    "mocha": "^10.2.0"
   }
 }
