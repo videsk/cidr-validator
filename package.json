@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/videsk/ip-range-check.git"
+    "url": "git+https://github.com/videsk/cidr-validator.git"
   },
   "keywords": [
     "ip",
@@ -26,9 +26,9 @@
   "author": "Daniel Compton (https://danielcompton.net)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/videsk/ip-range-check/issues"
+    "url": "https://github.com/videsk/cidr-validator/issues"
   },
-  "homepage": "https://github.com/videsk/ip-range-check#readme",
+  "homepage": "https://github.com/videsk/cidr-validator#readme",
   "dependencies": {
     "ipaddr.js": "^2.0.1"
   },
