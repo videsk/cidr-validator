@@ -1,16 +1,16 @@
 /**
  *
- * @param {string} addr
- * @param {(string | string[])} range
  * @returns {boolean}
+ * @param ipAddress
+ * @param ipList
  */
-declare function check_many_cidrs(
-  addr: string,
-  range: string | string[]
+declare function verifyCIDRList(
+  ipAddress: string,
+  ipList: string | string[]
 ): boolean;
 
-declare namespace check_many_cidrs {}
+declare namespace verifyCIDRList {}
 
 declare module "ip-range-check" {
-  export = check_many_cidrs;
+  export = verifyCIDRList;
 }
