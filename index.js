@@ -1,4 +1,13 @@
-
+/**
+ * Copyright (C) 2023 by Videsk - All Rights Reserved
+ * @name LIBRARY_NAME
+ * @author Daniel Compton (http://danielcompton.net)
+ * @license MIT
+ * Written by Daniel Compton (http://danielcompton.net), maintained by Videsk (https://github.com/videsk)
+ *
+ * Check whether an IP(v4 or v6) is in an CIDR range
+ *
+*/
 
 const ipaddr = require("ipaddr.js");
 
